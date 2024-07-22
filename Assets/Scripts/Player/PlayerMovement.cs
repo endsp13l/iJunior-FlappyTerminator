@@ -5,8 +5,8 @@ public class PlayerMovement : MonoBehaviour
 {
     [SerializeField] private float _jetForce = 5f;
     [SerializeField] private float _speed = 3f;
-    [SerializeField] private float _maxRotationAngle = 25f;
-    [SerializeField] private float _minRotationAngle = -25f;
+    [SerializeField] private float _maxRotationAngle = 15f;
+    [SerializeField] private float _minRotationAngle = -15f;
     [SerializeField] private float _rotationSpeed = 1f;
 
     private Rigidbody2D _rigidbody;
