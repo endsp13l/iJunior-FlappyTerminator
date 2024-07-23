@@ -14,6 +14,8 @@ public class PlayerMovement : MonoBehaviour
     private Quaternion _minRotation;
     private Quaternion _maxRotation;
     private float _rotationAngle;
+   
+    public bool IsFlying => _rigidbody.velocity.y > 0;
     
     private void Start()
     {
@@ -21,11 +23,12 @@ public class PlayerMovement : MonoBehaviour
         _minRotation = Quaternion.Euler(0, 0, _minRotationAngle);
         _maxRotation = Quaternion.Euler(0, 0, _maxRotationAngle);
     }
-    
+
     private void Awake()
     {
         _rigidbody = GetComponent<Rigidbody2D>();
     }
+
     private void Update()
     {
         if (Input.GetKeyDown(KeyCode.W))
@@ -33,7 +36,7 @@ public class PlayerMovement : MonoBehaviour
             _rigidbody.velocity = new Vector2(_speed, _jetForce);
             transform.rotation = _maxRotation;
         }
-        
-        transform.rotation = Quaternion.Lerp(transform.rotation , _minRotation, Time.deltaTime * _rotationSpeed);
+
+        transform.rotation = Quaternion.Lerp(transform.rotation, _minRotation, Time.deltaTime * _rotationSpeed);
     }
 }
