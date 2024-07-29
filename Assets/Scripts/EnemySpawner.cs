@@ -1,4 +1,3 @@
-using System;
 using System.Collections;
 using UnityEngine;
 using Random = UnityEngine.Random;
@@ -18,12 +17,7 @@ public class EnemySpawner : MonoBehaviour
         _coroutine = StartCoroutine(Spawn());
     }
 
-    private void Start()
-    {
-        _coroutine = StartCoroutine(Spawn());
-    }
-
-    private IEnumerator Spawn()
+   private IEnumerator Spawn()
     {
         while (_isActive)
         {
