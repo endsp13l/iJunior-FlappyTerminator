@@ -11,11 +11,13 @@ public class Bullet : MonoBehaviour
         transform.Translate(Vector2.right * (_speed * Time.deltaTime));
     }
 
-    private void OnCollisionEnter(Collision other)
+    private void OnCollisionEnter2D(Collision2D other)
     {
         if (other.gameObject.TryGetComponent(out IDamageable target))
         {
             target.Destroy();
+
+            Destroy(gameObject);
         }
     }
 

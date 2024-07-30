@@ -7,6 +7,9 @@ public class PlayerFollower : MonoBehaviour
     
     private void LateUpdate()
     {
+        if (_player == null)
+            return;
+        
         Vector3 position = transform.position;
         position.x = _player.transform.position.x + _xOffset;
         transform.position = position;

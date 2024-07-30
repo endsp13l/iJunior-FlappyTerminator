@@ -19,10 +19,12 @@ public class EnemySpawner : MonoBehaviour
 
    private IEnumerator Spawn()
     {
+        WaitForSeconds wait = new WaitForSeconds(_spawnDelay);
+        
         while (_isActive)
         {
             Instantiate(_enemy, GetRandomPosition(), Quaternion.identity);
-            yield return new WaitForSeconds(_spawnDelay);
+            yield return wait;
         }
     }
 

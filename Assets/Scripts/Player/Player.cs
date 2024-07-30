@@ -15,6 +15,6 @@ public class Player : MonoBehaviour, IDamageable
 
   public void Destroy()
   {
-    throw new System.NotImplementedException();
+    Destroy(gameObject);
   }
 }

@@ -33,7 +33,7 @@ public class PlayerMovement : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.W))
         {
-            _rigidbody.velocity = new Vector2(_speed, _jetForce);
+           _rigidbody.velocity = new Vector2(_speed, _jetForce);
             transform.rotation = _maxRotation;
         }
 
