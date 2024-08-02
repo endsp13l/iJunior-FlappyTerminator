@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using UnityEngine;
 
@@ -10,6 +11,10 @@ public class PlayerCombat : MonoBehaviour
     private Coroutine _coroutine;
     private bool _isActive;
     private bool _isReady;
+    
+    public event Action Attack;
+    
+    
     
     private void OnEnable()
     {
@@ -26,11 +31,13 @@ public class PlayerCombat : MonoBehaviour
             Shoot();
     }
     
+    private void OnDisable() => _isActive = false;
+    
     private void Shoot()
     {
         _isReady = false;
         Instantiate(_bullet, _shootPoint.position, _shootPoint.rotation);
-    
+        Attack?.Invoke();
         _coroutine = StartCoroutine(ShootDelay());
     }
 

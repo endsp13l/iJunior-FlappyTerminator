@@ -1,20 +1,26 @@
+using System;
 using UnityEngine;
 
 public class Player : MonoBehaviour, IDamageable
 {
-  private Animator _animator;
-  private AudioSource _audioSource;
-  
-  private bool _isAlive = true;
+    [SerializeField] private ScoreCounter _scoreCounter;
 
-  private void Awake()
-  {
-    _animator = GetComponent<Animator>();
-    _audioSource = GetComponent<AudioSource>();
-  }
+    private Animator _animator;
+    private AudioSource _audioSource;
 
-  public void Destroy()
-  {
-    Destroy(gameObject);
-  }
+    private bool _isAlive = true;
+    public event Action<int> Killed;
+
+    private void Awake()
+    {
+        _animator = GetComponent<Animator>();
+        _audioSource = GetComponent<AudioSource>();
+    }
+
+    public void Kill() => Killed?.Invoke(_scoreCounter.Score);
+
+    public void Destroy()
+    {
+        Destroy(gameObject);
+    }
 }

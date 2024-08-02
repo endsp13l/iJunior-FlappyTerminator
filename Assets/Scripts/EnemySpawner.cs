@@ -6,6 +6,7 @@ public class EnemySpawner : MonoBehaviour
 {
     [SerializeField] private Enemy _enemy;
     [SerializeField] private Camera _camera;
+    [SerializeField] private ScoreCounter _scoreCounter;
     [SerializeField] private float _spawnDelay = 1f;
 
     private Coroutine _coroutine;
@@ -23,7 +24,8 @@ public class EnemySpawner : MonoBehaviour
         
         while (_isActive)
         {
-            Instantiate(_enemy, GetRandomPosition(), Quaternion.identity);
+            Enemy enemy = Instantiate(_enemy, GetRandomPosition(), Quaternion.identity);
+            enemy.Killed += _scoreCounter.AddScore;
             yield return wait;
         }
     }

@@ -15,7 +15,7 @@ public class Bullet : MonoBehaviour
     {
         if (other.gameObject.TryGetComponent(out IDamageable target))
         {
-            target.Destroy();
+            target.Kill();
 
             Destroy(gameObject);
         }
