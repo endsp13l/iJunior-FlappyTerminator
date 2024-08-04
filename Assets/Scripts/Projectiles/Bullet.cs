@@ -1,10 +1,12 @@
+using System;
 using UnityEngine;
 
 [RequireComponent(typeof(Collider2D))]
-public class Bullet : MonoBehaviour
+public class Bullet : MonoBehaviour, IPoolable
 {
-    [SerializeField] private Sprite _sprite;
     [SerializeField] private float _speed = 20f;
+
+    public event Action<GameObject> Destroyed;
 
     private void Update()
     {
@@ -16,13 +18,11 @@ public class Bullet : MonoBehaviour
         if (other.gameObject.TryGetComponent(out IDamageable target))
         {
             target.Kill();
-
-            Destroy(gameObject);
+            Destroy();
         }
     }
 
-    private void OnBecameInvisible()
-    {
-        Destroy(gameObject);
-    }
+    private void OnBecameInvisible() => Destroy();
+
+    private void Destroy() => Destroyed?.Invoke(gameObject);
 }

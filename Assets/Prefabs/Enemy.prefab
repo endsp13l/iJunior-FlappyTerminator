@@ -183,6 +183,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 00f688149c5d6a146b3d9aaf3565f035, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _destroyScore: 2
+  _avoidScore: 1
 --- !u!114 &1479707721336735863
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -195,8 +197,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4508d7671ee43a54da6cab7830682d8b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _bullet: {fileID: 5033379345827915579, guid: 8c56c92a6acff1445b7790dd21417f0d, type: 3}
+  _bulletPrefab: {fileID: 5033379345827915579, guid: 8c56c92a6acff1445b7790dd21417f0d, type: 3}
   _shootPoint: {fileID: 5128112315440929938}
+  _poolSize: 10
+  _poolMaxSize: 30
   _shootDelay: 3
 --- !u!70 &5215824117351468558
 CapsuleCollider2D:

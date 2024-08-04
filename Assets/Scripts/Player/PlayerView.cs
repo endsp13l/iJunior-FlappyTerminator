@@ -16,12 +16,12 @@ public class PlayerView : MonoBehaviour
         _playerMovement = GetComponent<PlayerMovement>();
         _playerCombat = GetComponent<PlayerCombat>();
     }
-    
+
     private void OnEnable() => _playerCombat.Attack += OnShoot;
-    
-    private void OnDisable() => _playerCombat.Attack -= OnShoot;
-    
+
     private void Update() => _animator.SetBool(_isFlying, _playerMovement.IsFlying);
-    
+
+    private void OnDisable() => _playerCombat.Attack -= OnShoot;
+
     private void OnShoot() => _audioSource.Play();
 }

@@ -14,5 +14,11 @@ public class ScoreView : MonoBehaviour
 
     private void OnDisable() => _scoreCounter.ScoreChanged -= OnScoreChanged;
 
-    private void OnScoreChanged() => _scoreText.text = _scoreCounter.Score.ToString();
+    private void OnScoreChanged()
+    {
+        if (_scoreCounter.MaxScore == 0)
+            _scoreText.text = _scoreCounter.Score.ToString();
+        else
+            _scoreText.text = $"{_scoreCounter.Score}/{_scoreCounter.MaxScore}";
+    }
 }
