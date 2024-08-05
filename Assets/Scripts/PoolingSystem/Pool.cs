@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 using UnityEngine.Pool;
 
@@ -16,6 +17,9 @@ public class Pool<T> where T : MonoBehaviour, IPoolable
         _poolMaxSize = poolMaxSize;
     }
 
+    public event Action<T> Getted;
+    public event Action<T> Released;
+
     public void Initialize()
     {
         _objectPool = new ObjectPool<GameObject>(
@@ -29,8 +33,6 @@ public class Pool<T> where T : MonoBehaviour, IPoolable
     }
 
     public GameObject Get() => _objectPool.Get();
-
-    public void Release(GameObject obj) => _objectPool.Release(obj);
 
     private GameObject CreateObject()
     {
@@ -46,9 +48,16 @@ public class Pool<T> where T : MonoBehaviour, IPoolable
     {
         obj.transform.rotation = Quaternion.identity;
         obj.SetActive(true);
+
+        Getted?.Invoke(GetCurrentTypeComponent(obj));
     }
 
-    private void ActionOnRelease(GameObject obj) => obj.SetActive(false);
+    private void ActionOnRelease(GameObject obj)
+    {
+        obj.SetActive(false);
+
+        Released?.Invoke(GetCurrentTypeComponent(obj));
+    }
 
     private void ActionOnDestroy(GameObject gameObject)
     {

@@ -22,7 +22,5 @@ public class Bullet : MonoBehaviour, IPoolable
         }
     }
 
-    private void OnBecameInvisible() => Destroy();
-
-    private void Destroy() => Destroyed?.Invoke(gameObject);
+    public void Destroy() => Destroyed?.Invoke(gameObject);
 }

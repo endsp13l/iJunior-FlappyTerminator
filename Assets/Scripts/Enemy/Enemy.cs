@@ -16,8 +16,5 @@ public class Enemy : MonoBehaviour, IDamageable, IPoolable
         Destroy();
     }
 
-    public void Destroy()
-    {
-        Destroy(gameObject);
-    }
+    public void Destroy() => Destroyed?.Invoke(gameObject);
 }

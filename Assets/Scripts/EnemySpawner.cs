@@ -4,18 +4,31 @@ using Random = UnityEngine.Random;
 
 public class EnemySpawner : MonoBehaviour
 {
-    [SerializeField] private Enemy _enemy;
+    [SerializeField] private Enemy _enemyPrefab;
     [SerializeField] private Camera _camera;
     [SerializeField] private ScoreCounter _scoreCounter;
     [SerializeField] private float _spawnDelay = 1f;
 
+    [SerializeField] private int _poolSize = 10;
+    [SerializeField] private int _poolMaxSize = 30;
+
+    private Pool<Enemy> _pool;
     private Coroutine _coroutine;
     private bool _isActive;
 
-    private void Start()
+    private void Awake()
+    {
+        _pool = new Pool<Enemy>(_enemyPrefab, _poolSize, _poolMaxSize);
+        _pool.Initialize();
+    }
+
+    private void OnEnable()
     {
         _isActive = true;
         _coroutine = StartCoroutine(Spawn());
+
+        _pool.Getted += Subscribe;
+        _pool.Released += Unsubscribe;
     }
 
     private void OnDisable()
@@ -23,6 +36,9 @@ public class EnemySpawner : MonoBehaviour
         _isActive = false;
         if (_coroutine != null)
             StopCoroutine(_coroutine);
+
+        _pool.Getted -= Subscribe;
+        _pool.Released -= Unsubscribe;
     }
 
     private IEnumerator Spawn()
@@ -31,9 +47,11 @@ public class EnemySpawner : MonoBehaviour
 
         while (_isActive)
         {
-            Enemy enemy = Instantiate(_enemy, GetRandomPosition(), Quaternion.identity);
-            Subscribe(enemy);
-            yield return wait;
+            if (_pool.Get().TryGetComponent(out Enemy enemy))
+            {
+                enemy.transform.position = GetRandomPosition();
+                yield return wait;
+            }
         }
     }
 
@@ -49,5 +67,11 @@ public class EnemySpawner : MonoBehaviour
     {
         enemy.Killed += _scoreCounter.AddScore;
         enemy.Avoided += _scoreCounter.AddScore;
+    }
+
+    private void Unsubscribe(Enemy enemy)
+    {
+        enemy.Killed -= _scoreCounter.AddScore;
+        enemy.Avoided -= _scoreCounter.AddScore;
     }
 }
