@@ -13,5 +13,5 @@ public class Player : MonoBehaviour, IDamageable
         Destroy();
     }
 
-    public void Destroy() => Destroy(gameObject);
+    public void Destroy() => gameObject.SetActive(false);
 }

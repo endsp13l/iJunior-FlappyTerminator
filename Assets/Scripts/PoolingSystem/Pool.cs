@@ -34,6 +34,8 @@ public class Pool<T> where T : MonoBehaviour, IPoolable
 
     public GameObject Get() => _objectPool.Get();
 
+    public void Clear() =>_objectPool.Clear();
+
     private GameObject CreateObject()
     {
         GameObject obj = GameObject.Instantiate(_objectPrefab.gameObject);

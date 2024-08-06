@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 
 public abstract class Shooter : MonoBehaviour
@@ -15,6 +16,8 @@ public abstract class Shooter : MonoBehaviour
         _pool = new Pool<Bullet>(_bulletPrefab, _poolSize, _poolMaxSize);
         _pool.Initialize();
     }
+    
+    private void OnDisable() => _pool.Clear();
 
     protected void Shoot() => SetStartPosition(_pool.Get());
 

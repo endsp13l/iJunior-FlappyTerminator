@@ -7,19 +7,33 @@ public class BackgroundMovement : MonoBehaviour
 
     [SerializeField] private Camera _camera;
 
+    private float _defaultStartPositionX;
+    private float _defaultEndPositionX;
     private float _startPositionX;
     private float _endPositionX;
 
     private void Awake()
     {
-        _startPositionX = transform.position.x;
-        _endPositionX = GetComponent<Collider2D>().bounds.size.x / HalfDivider;
+        _defaultStartPositionX = transform.position.x;
+        _defaultEndPositionX = GetComponent<Collider2D>().bounds.size.x / HalfDivider;
+
+        ResetPosition();
     }
 
     private void FixedUpdate()
     {
         if (_camera.transform.position.x >= _endPositionX)
             ChangePosition(_camera.transform.position.x);
+
+        if (_camera.transform.position.x < _startPositionX)
+            ResetPosition();
+    }
+
+    private void ResetPosition()
+    {
+        transform.position = Vector3.zero;
+        _endPositionX = _defaultEndPositionX;
+        _startPositionX = _defaultStartPositionX;
     }
 
     private void ChangePosition(float cameraPositionX)

@@ -39,6 +39,8 @@ public class EnemySpawner : MonoBehaviour
 
         _pool.Getted -= Subscribe;
         _pool.Released -= Unsubscribe;
+
+        _pool.Clear();
     }
 
     private IEnumerator Spawn()

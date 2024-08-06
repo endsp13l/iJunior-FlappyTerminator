@@ -17,19 +17,29 @@ public class PlayerMovement : MonoBehaviour
 
     public bool IsFlying => _rigidbody.velocity.y > 0;
 
-    private void Start()
+    private void Awake()
     {
+        _rigidbody = GetComponent<Rigidbody2D>();
         _startPosition = transform.position;
+        
         _minRotation = Quaternion.Euler(0, 0, _minRotationAngle);
         _maxRotation = Quaternion.Euler(0, 0, _maxRotationAngle);
     }
 
-    private void Awake()
+    private void OnEnable()
     {
-        _rigidbody = GetComponent<Rigidbody2D>();
+        _rigidbody.velocity = Vector2.zero;
+        transform.rotation = Quaternion.identity;
+        transform.position = _startPosition;
     }
-
-    private void Update()
+    
+    private void OnDisable()
+    {
+        _rigidbody.velocity = Vector2.zero;
+        transform.rotation = Quaternion.identity;
+    }
+    
+   private void Update()
     {
         if (Input.GetKeyDown(KeyCode.W))
         {

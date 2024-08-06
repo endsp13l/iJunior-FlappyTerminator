@@ -20,7 +20,7 @@ public class PlayerCombat : Shooter
 
     private void Update()
     {
-        if (_isReady == false)
+        if (_isReady == false || _isActive == false)
             return;
 
         if (Input.GetMouseButtonDown(0))
