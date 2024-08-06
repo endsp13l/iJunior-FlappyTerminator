@@ -1,10 +1,12 @@
 using System;
 using System.Collections;
 using UnityEngine;
+using Random = UnityEngine.Random;
 
 public class EnemyCombat : Shooter
 {
-    [SerializeField] private float _shootDelay = 0.5f;
+    [SerializeField] private float _minShootDelay = 1f;
+    [SerializeField] private float _maxShootDelay = 3f;
 
     private Coroutine _coroutine;
     private bool _isActive;
@@ -19,7 +21,7 @@ public class EnemyCombat : Shooter
 
     private IEnumerator Fight()
     {
-        WaitForSeconds wait = new WaitForSeconds(_shootDelay);
+        WaitForSeconds wait = new WaitForSeconds(GetRandomDelay());
 
         while (_isActive)
         {
@@ -37,4 +39,6 @@ public class EnemyCombat : Shooter
 
         _isActive = false;
     }
+
+    private float GetRandomDelay() => Random.Range(_minShootDelay, _maxShootDelay);
 }

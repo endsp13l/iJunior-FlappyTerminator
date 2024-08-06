@@ -7,10 +7,11 @@ public class Player : MonoBehaviour, IDamageable
 
     public event Action<int> Killed;
 
-    public void Kill() => Killed?.Invoke(_scoreCounter.Score);
-
-    public void Destroy()
+    public void Kill()
     {
-        Destroy(gameObject);
+        Killed?.Invoke(_scoreCounter.Score);
+        Destroy();
     }
+
+    public void Destroy() => Destroy(gameObject);
 }
