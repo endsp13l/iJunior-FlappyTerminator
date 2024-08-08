@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 
 [RequireComponent(typeof(Rigidbody2D))]
@@ -15,13 +16,14 @@ public class PlayerMovement : MonoBehaviour
     private Quaternion _maxRotation;
     private float _rotationAngle;
 
-    public bool IsFlying => _rigidbody.velocity.y > 0;
+    public event Action FlightStart;
+    public event Action FlightEnd;
 
     private void Awake()
     {
         _rigidbody = GetComponent<Rigidbody2D>();
         _startPosition = transform.position;
-        
+
         _minRotation = Quaternion.Euler(0, 0, _minRotationAngle);
         _maxRotation = Quaternion.Euler(0, 0, _maxRotationAngle);
     }
@@ -31,22 +33,33 @@ public class PlayerMovement : MonoBehaviour
         _rigidbody.velocity = Vector2.zero;
         transform.rotation = Quaternion.identity;
         transform.position = _startPosition;
+
+        Fly();
     }
-    
+
     private void OnDisable()
     {
         _rigidbody.velocity = Vector2.zero;
         transform.rotation = Quaternion.identity;
     }
-    
-   private void Update()
+
+    private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.W))
-        {
-            _rigidbody.velocity = new Vector2(_speed, _jetForce);
-            transform.rotation = _maxRotation;
-        }
+        if (Input.GetKeyDown(KeyCode.Space))
+            Fly();
+
+        if (_rigidbody.velocity.y <= 0)
+            FlightEnd?.Invoke();
 
         transform.rotation = Quaternion.Lerp(transform.rotation, _minRotation, Time.deltaTime * _rotationSpeed);
+    }
+
+    private void Fly()
+    {
+        FlightEnd?.Invoke();
+        FlightStart?.Invoke();
+
+        _rigidbody.velocity = new Vector2(_speed, _jetForce);
+        transform.rotation = _maxRotation;
     }
 }

@@ -1,4 +1,3 @@
-using System;
 using UnityEngine;
 
 public abstract class Shooter : MonoBehaviour
@@ -10,7 +9,7 @@ public abstract class Shooter : MonoBehaviour
     [SerializeField] private int _poolMaxSize = 30;
 
     private Pool<Bullet> _pool;
-
+    
     private void Awake()
     {
         _pool = new Pool<Bullet>(_bulletPrefab, _poolSize, _poolMaxSize);

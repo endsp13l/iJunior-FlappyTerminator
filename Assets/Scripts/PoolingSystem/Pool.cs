@@ -1,6 +1,7 @@
 using System;
 using UnityEngine;
 using UnityEngine.Pool;
+using Object = UnityEngine.Object;
 
 public class Pool<T> where T : MonoBehaviour, IPoolable
 {
@@ -19,6 +20,7 @@ public class Pool<T> where T : MonoBehaviour, IPoolable
 
     public event Action<T> Getted;
     public event Action<T> Released;
+    public event Action Cleared;
 
     public void Initialize()
     {
@@ -34,13 +36,18 @@ public class Pool<T> where T : MonoBehaviour, IPoolable
 
     public GameObject Get() => _objectPool.Get();
 
-    public void Clear() =>_objectPool.Clear();
-
+    public void Clear()
+    {
+        Cleared?.Invoke();
+        _objectPool.Clear();
+    }
+    
     private GameObject CreateObject()
     {
-        GameObject obj = GameObject.Instantiate(_objectPrefab.gameObject);
+        GameObject obj = Object.Instantiate(_objectPrefab.gameObject);
 
         GetCurrentTypeComponent(obj).Destroyed += _objectPool.Release;
+        Cleared += GetCurrentTypeComponent(obj).Clear;
         obj.SetActive(false);
 
         return obj;
@@ -57,14 +64,14 @@ public class Pool<T> where T : MonoBehaviour, IPoolable
     private void ActionOnRelease(GameObject obj)
     {
         obj.SetActive(false);
-
         Released?.Invoke(GetCurrentTypeComponent(obj));
     }
 
-    private void ActionOnDestroy(GameObject gameObject)
+    private void ActionOnDestroy(GameObject obj)
     {
-        GetCurrentTypeComponent(gameObject).Destroyed -= _objectPool.Release;
-        GameObject.Destroy(gameObject);
+        GetCurrentTypeComponent(obj).Destroyed -= _objectPool.Release;
+        Cleared -= GetCurrentTypeComponent(obj).Clear;
+        Object.Destroy(obj);
     }
 
     private T GetCurrentTypeComponent(GameObject obj)

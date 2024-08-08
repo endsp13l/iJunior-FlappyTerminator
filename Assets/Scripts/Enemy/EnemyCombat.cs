@@ -19,6 +19,14 @@ public class EnemyCombat : Shooter
         _coroutine = StartCoroutine(Fight());
     }
 
+    private void OnDisable()
+    {
+        if (_coroutine != null)
+            StopCoroutine(_coroutine);
+
+        _isActive = false;
+    }
+
     private IEnumerator Fight()
     {
         WaitForSeconds wait = new WaitForSeconds(GetRandomDelay());
@@ -30,14 +38,6 @@ public class EnemyCombat : Shooter
             Attack?.Invoke();
             Shoot();
         }
-    }
-
-    private void OnDisable()
-    {
-        if (_coroutine != null)
-            StopCoroutine(_coroutine);
-
-        _isActive = false;
     }
 
     private float GetRandomDelay() => Random.Range(_minShootDelay, _maxShootDelay);

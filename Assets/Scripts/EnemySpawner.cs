@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using UnityEngine;
 using Random = UnityEngine.Random;
@@ -24,11 +25,11 @@ public class EnemySpawner : MonoBehaviour
 
     private void OnEnable()
     {
-        _isActive = true;
-        _coroutine = StartCoroutine(Spawn());
-
         _pool.Getted += Subscribe;
         _pool.Released += Unsubscribe;
+        
+        _isActive = true;
+        _coroutine = StartCoroutine(Spawn());
     }
 
     private void OnDisable()
@@ -40,6 +41,9 @@ public class EnemySpawner : MonoBehaviour
         _pool.Getted -= Subscribe;
         _pool.Released -= Unsubscribe;
 
+    }
+    public void Reset()
+    {
         _pool.Clear();
     }
 
@@ -76,4 +80,5 @@ public class EnemySpawner : MonoBehaviour
         enemy.Killed -= _scoreCounter.AddScore;
         enemy.Avoided -= _scoreCounter.AddScore;
     }
+
 }

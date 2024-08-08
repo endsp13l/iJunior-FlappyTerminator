@@ -6,4 +6,6 @@ public interface IPoolable
     public event Action<GameObject> Destroyed;
     
     public void Destroy();
+    
+    public void Clear();
 }

@@ -251,6 +251,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3720772c4f376a94e85afc62fff0e7e9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _shootSound: {fileID: 2567256415605328804}
+  _deathSound: {fileID: 8300000, guid: 20975e9511bd8274da5978ca99ccc2ec, type: 3}
 --- !u!82 &2567256415605328804
 AudioSource:
   m_ObjectHideFlags: 0

@@ -38,9 +38,11 @@ public class BackgroundMovement : MonoBehaviour
 
     private void ChangePosition(float cameraPositionX)
     {
-        transform.position = new Vector3(cameraPositionX, transform.position.y, transform.position.z);
+        Vector3 position = transform.position;
+        position = new Vector3(cameraPositionX, position.y, position.z);
+        transform.position = position;
 
-        _endPositionX += transform.position.x - _startPositionX;
-        _startPositionX = transform.position.x;
+        _endPositionX += position.x - _startPositionX;
+        _startPositionX = position.x;
     }
 }

@@ -16,7 +16,7 @@ public class ScoreView : MonoBehaviour
 
     private void OnScoreChanged()
     {
-        if (_scoreCounter.MaxScore == 0)
+        if (_scoreCounter.MaxScore == 0 || _scoreCounter.Score >= _scoreCounter.MaxScore)
             _scoreText.text = _scoreCounter.Score.ToString();
         else
             _scoreText.text = $"{_scoreCounter.Score}/{_scoreCounter.MaxScore}";

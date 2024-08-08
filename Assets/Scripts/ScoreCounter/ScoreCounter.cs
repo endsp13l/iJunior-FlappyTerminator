@@ -23,7 +23,9 @@ public class ScoreCounter : MonoBehaviour
         ScoreChanged?.Invoke();
     }
 
-    public void SetMaxScore(int maxScore) => _maxScore = maxScore;
-
-    public void Reset() => _score = 0;
+    public void SetMaxScore(int maxScore)
+    {
+        if (maxScore > _maxScore)
+            _maxScore = maxScore;
+    }
 }
