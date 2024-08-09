@@ -19,13 +19,15 @@ public class Game : MonoBehaviour
         DeactivatePlayer();
     }
 
-    private void OnEnable()
-    {
-        Ended += _enemySpawner.Reset;
-        _player.Killed += End;
-    }
+    private void OnEnable() => _player.Killed += End;
 
     private void Start() => Launched?.Invoke();
+
+    private void Update()
+    {
+        if (Input.GetKey(KeyCode.Escape))
+            Application.Quit();
+    }
 
     private void OnDisable() => _player.Killed -= End;
 

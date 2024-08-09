@@ -15,6 +15,8 @@ public class EnemyCombat : Shooter
 
     private void OnEnable()
     {
+        ClearBullets();
+        
         _isActive = true;
         _coroutine = StartCoroutine(Fight());
     }

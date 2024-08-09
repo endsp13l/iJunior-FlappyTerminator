@@ -14,6 +14,8 @@ public class PlayerCombat : Shooter
 
     private void OnEnable()
     {
+        ClearBullets();
+        
         _isActive = true;
         _isReady = true;
     }

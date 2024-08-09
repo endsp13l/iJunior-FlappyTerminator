@@ -1,4 +1,6 @@
+using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Pool;
 
 public abstract class Shooter : MonoBehaviour
 {
@@ -8,21 +10,52 @@ public abstract class Shooter : MonoBehaviour
     [SerializeField] private int _poolSize = 10;
     [SerializeField] private int _poolMaxSize = 30;
 
-    private Pool<Bullet> _pool;
-    
+    private ObjectPool<Bullet> _objectPool;
+    private List<Bullet> _bullets = new List<Bullet>();
+
     private void Awake()
     {
-        _pool = new Pool<Bullet>(_bulletPrefab, _poolSize, _poolMaxSize);
-        _pool.Initialize();
+        _objectPool = new ObjectPool<Bullet>(
+            createFunc: () => CreateBullet(),
+            actionOnGet: (obj) => RestartBullet(obj),
+            actionOnRelease: (obj) => obj.gameObject.SetActive(false),
+            actionOnDestroy: (obj) => ActionOnDestroy(obj),
+            collectionCheck: true,
+            defaultCapacity: _poolSize,
+            maxSize: _poolMaxSize);
     }
-    
-    private void OnDisable() => _pool.Clear();
 
-    protected void Shoot() => SetStartPosition(_pool.Get());
+    protected void ClearBullets()
+    {
+        foreach (Bullet bullet in _bullets)
+            bullet.gameObject.SetActive(false);
+    }
 
-    private void SetStartPosition(GameObject bullet)
+    protected void Shoot() => _objectPool.Get();
+
+    private Bullet CreateBullet()
+    {
+        Bullet bullet = Instantiate(_bulletPrefab);
+        _bullets.Add(bullet);
+
+        bullet.Destroyed += _objectPool.Release;
+
+        bullet.gameObject.SetActive(false);
+        return bullet;
+    }
+
+    private void ActionOnDestroy(Bullet bullet)
+    {
+        bullet.Destroyed -= _objectPool.Release;
+        _bullets.Remove(bullet);
+        Destroy(bullet.gameObject);
+    }
+
+    private void RestartBullet(Bullet bullet)
     {
         bullet.transform.position = _shootPoint.position;
         bullet.transform.rotation = _shootPoint.rotation;
+
+        bullet.gameObject.SetActive(true);
     }
 }

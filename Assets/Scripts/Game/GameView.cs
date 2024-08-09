@@ -7,13 +7,8 @@ public class GameView : MonoBehaviour
     [SerializeField] private Window _endScreen;
     [SerializeField] private PlayerView _playerView;
 
-    private Game _game;
-
-    private void Awake()
-    {
-        _game = GetComponent<Game>();
-    }
-
+    private Game _game => GetComponent<Game>();
+    
     private void OnEnable()
     {
         _game.Launched += Launch;
@@ -22,6 +17,15 @@ public class GameView : MonoBehaviour
         _launchScreen.Started += _game.Play;
         _endScreen.Started += _game.Play;
     }
+    
+    private void OnDisable()
+    {
+        _game.Launched -= Launch;
+        _game.Ended -= End;
+        
+        _launchScreen.Started -= _game.Play;
+        _endScreen.Started -= _game.Play;
+    }
 
     public void Launch()
     {
@@ -29,8 +33,5 @@ public class GameView : MonoBehaviour
         _playerView.ShowFlightAnimation();
     }
 
-    public void End()
-    {
-        _endScreen.gameObject.SetActive(true);
-    }
+    public void End() => _endScreen.gameObject.SetActive(true);
 }

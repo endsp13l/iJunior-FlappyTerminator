@@ -10,7 +10,7 @@ public class Enemy : MonoBehaviour, IDamageable, IPoolable
 
     public event Action<int> Killed;
     public event Action<int> Avoided;
-    public event Action<GameObject> Destroyed;
+    public event Action<Enemy> Destroyed;
 
     private void OnCollisionEnter2D(Collision2D other)
     {
@@ -29,7 +29,5 @@ public class Enemy : MonoBehaviour, IDamageable, IPoolable
 
     public void Avoid() => Avoided?.Invoke(_avoidScore);
 
-    public void Destroy() => Destroyed?.Invoke(gameObject);
-
-    public void Clear() => gameObject.SetActive(false);
+    public void Destroy() => Destroyed?.Invoke(this);
 }

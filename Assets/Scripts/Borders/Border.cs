@@ -4,7 +4,9 @@ using UnityEngine;
 [RequireComponent(typeof(Collider2D))]
 public class Border : MonoBehaviour
 {
-    private void OnCollisionEnter2D(Collision2D other)
+    protected void OnCollisionEnter2D(Collision2D other) => CheckOtherObject(other);
+
+    protected void CheckOtherObject(Collision2D other)
     {
         if (other.gameObject.TryGetComponent(out IPoolable poolable))
         {

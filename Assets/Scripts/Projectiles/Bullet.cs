@@ -6,12 +6,9 @@ public class Bullet : MonoBehaviour, IPoolable
 {
     [SerializeField] private float _speed = 20f;
 
-    public event Action<GameObject> Destroyed;
+    public event Action<Bullet> Destroyed;
 
-    private void Update()
-    {
-        transform.Translate(Vector2.right * (_speed * Time.deltaTime));
-    }
+    private void Update() => transform.Translate(Vector2.right * (_speed * Time.deltaTime));
 
     private void OnCollisionEnter2D(Collision2D other)
     {
@@ -22,7 +19,5 @@ public class Bullet : MonoBehaviour, IPoolable
         }
     }
 
-    public void Destroy() => Destroyed?.Invoke(gameObject);
-
-    public void Clear() => gameObject.SetActive(false);
+    public void Destroy() => Destroyed?.Invoke(this);
 }
