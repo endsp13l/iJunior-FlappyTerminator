@@ -31,7 +31,7 @@ public class PlayerCombat : Shooter
 
     private void OnDisable() => _isActive = false;
 
-    private void TryShoot()
+    public void TryShoot()
     {
         _isReady = false;
         Shoot();

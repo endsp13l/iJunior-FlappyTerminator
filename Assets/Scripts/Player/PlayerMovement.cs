@@ -54,7 +54,7 @@ public class PlayerMovement : MonoBehaviour
         transform.rotation = Quaternion.Lerp(transform.rotation, _minRotation, Time.deltaTime * _rotationSpeed);
     }
 
-    private void Fly()
+    public void Fly()
     {
         FlightEnd?.Invoke();
         FlightStart?.Invoke();

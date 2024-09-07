@@ -1157,6 +1157,28 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 0
+--- !u!114 &1871802764 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 1433540805761304077, guid: c9e74d03d3ee6a542a154472f9c372e5, type: 3}
+  m_PrefabInstance: {fileID: 1928670093581672643}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b82d543fa7014ad468d389e8dc7f16ea, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &1871802765 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 820858057306944928, guid: c9e74d03d3ee6a542a154472f9c372e5, type: 3}
+  m_PrefabInstance: {fileID: 1928670093581672643}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cd0ac90990f55fa44b6de69b1e1f20fc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &2023237021
 GameObject:
   m_ObjectHideFlags: 0
@@ -1322,6 +1344,18 @@ PrefabInstance:
       propertyPath: m_Name
       value: Canvas
       objectReference: {fileID: 0}
+    - target: {fileID: 5178946664532898499, guid: cd8c6e1f288a0ba43b278927f1ecf8cd, type: 3}
+      propertyPath: _playerCombat
+      value: 
+      objectReference: {fileID: 1871802764}
+    - target: {fileID: 5178946664532898499, guid: cd8c6e1f288a0ba43b278927f1ecf8cd, type: 3}
+      propertyPath: _playerMovement
+      value: 
+      objectReference: {fileID: 1871802765}
+    - target: {fileID: 7889187688438567576, guid: cd8c6e1f288a0ba43b278927f1ecf8cd, type: 3}
+      propertyPath: m_TargetGraphic
+      value: 
+      objectReference: {fileID: 0}
     - target: {fileID: 8649069042464910662, guid: cd8c6e1f288a0ba43b278927f1ecf8cd, type: 3}
       propertyPath: m_Pivot.x
       value: 0
@@ -1404,6 +1438,10 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8649069042464910662, guid: cd8c6e1f288a0ba43b278927f1ecf8cd, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8765536286023084200, guid: cd8c6e1f288a0ba43b278927f1ecf8cd, type: 3}
+      propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
