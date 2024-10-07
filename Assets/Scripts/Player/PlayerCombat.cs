@@ -20,19 +20,13 @@ public class PlayerCombat : Shooter
         _isReady = true;
     }
 
-    private void Update()
-    {
-        if (_isReady == false || _isActive == false)
-            return;
-
-        if (Input.GetMouseButtonDown(0))
-            TryShoot();
-    }
-
     private void OnDisable() => _isActive = false;
 
     public void TryShoot()
     {
+        if (_isReady == false || _isActive == false)
+            return;
+        
         _isReady = false;
         Shoot();
         Attack?.Invoke();
